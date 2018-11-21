@@ -1,4 +1,8 @@
-#  File: readme.txt
+# Drupal 7 Slideshow Module
+## Author: Chase Keating
+###### Version: 1.0.0
+
+# File: readme.txt
 #  Changelog
 # # Important Notes: Ideally, this project will be located within /sites/all/modules/slideshow
 # # Dependencies: Field Image Caption @https://www.drupal.org/project/image_field_caption
