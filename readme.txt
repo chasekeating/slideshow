@@ -49,4 +49,4 @@ Known Issues: N/A
 
 
 
-Repo Link:
+Repo Link: https://github.com/chasekeating/slideshow
