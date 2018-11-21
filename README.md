@@ -6,6 +6,7 @@
 All notable changes to the project will be documented in this file
 
 Important Notes: Ideally, this project will be located within- /sites/all/modules/slideshow
+
 Dependencies: Field Image Caption @https://www.drupal.org/project/image_field_caption
 
 
