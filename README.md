@@ -1,6 +1,6 @@
 # Drupal 7 Slideshow Module
 ## Author: Chase Keating
-###### Version: 1.0.0
+###### Version: 1.0.2
 
 ## Changelog
 All notable changes to the project will be documented in this file
