@@ -1,0 +1,10 @@
+name = Drupal 7 Slideshow
+description = Custom module to display slideshow. Integrated with Owl Carousel.
+core = 7.x
+package = Custom Drupal 7 Module
+project = “Sandbox”
+
+files[] = slideshow.install
+files[] = slideshow.module
+stylesheets[all][] = /css/style.min.css
+dependencies[] = image_field_caption:image_field_caption

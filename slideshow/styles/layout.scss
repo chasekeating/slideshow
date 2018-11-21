@@ -1,0 +1,371 @@
+/*
+/ $File: layout.scss
+/ $Purpose: All layout specific styling is located within this file
+*/
+
+/* Default View */
+/* Main Slider Navigation */
+.slider-container {
+  max-width: 634px;
+    .slider-inner {
+      .owl-main-slider .owl-nav [class*=owl-] {
+        background: rgba(0, 0, 0, 0.8);
+        border: none;
+        height: 77px;
+        width: 44px;
+        font-size: 34px;
+        margin-right: -12px;
+        margin-left: -12px;
+        color: white;
+      }
+
+      .owl-main-slider .owl-prev {
+        height: 54px;
+        position: absolute;
+        top: 35%;
+        width: 27px;
+        z-index: 1000;
+        left: 12px;
+        float: left;
+        cursor: pointer;
+        margin-top: -27px;
+        @media screen and (max-width: 200px) {
+          top: 25% !important;
+        }
+      }
+
+      .owl-main-slider .owl-next {
+        height: 54px;
+        position: absolute;
+        top: 35%;
+        width: 27px;
+        z-index: 1000;
+        right: 12px;
+        float: right;
+        cursor: pointer;
+        margin-top: -27px;
+        @media screen and (max-width: 200px) {
+          top: 25% !important;
+        }
+      }
+    }
+  }
+
+/* End Main Slider Navigation */
+
+/* Fullscreen View */
+/* Main Slider Navigation */
+.slider-container.fullscreen {
+  background: rgba(0,0,0,0.9);
+  color: white !important;
+  min-width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10000;
+
+  .owl-main-slider .owl-prev {
+    height: 54px;
+    position: absolute;
+    top: 45%;
+    width: 100vw;
+    z-index: 10000;
+    left: 12px;
+    cursor: pointer;
+    margin-top: -27px;
+    @media screen and (max-width: 100px) {
+      top: 20%;
+
+    }
+  }
+
+  .owl-main-slider .owl-next {
+    height: 54px;
+    position: absolute;
+    top: 45%;
+    width: 27px;
+    z-index: 10000;
+    right: 12px;
+    cursor: pointer;
+    margin-top: -27px;
+  }
+
+  .owl-main-slider {
+    font-family: Roboto;
+    max-width: 100vw;
+    max-height: 100%;
+  }
+
+  .slide-image {
+    margin: 0 auto;
+    max-width: 80%;
+    @media screen and (max-width: 900px) {
+      max-width: 100vw;
+      max-height: 200px;
+    }
+  }
+
+  .owl-thumbnails {
+    display: none;
+  }
+
+  .exit-fullscreen {
+    display: block;
+    float: right;
+    cursor: pointer;
+  }
+  .slide-info-container {
+    padding: 40px;
+    max-width: 80%;
+    background: rgba(0,0,0, 0.5);
+    position: absolute;
+    bottom: 0;
+    margin: 0 auto;
+    width: 100%;
+    @media screen and (max-width: 900px) {
+      max-width: 100vw;
+    }
+  }
+
+  .slide-fullscreen {
+    z-index: 10000;
+  }
+
+  .slide-title {
+    color: white;
+  }
+  .owl-stage {
+    height: 98vh !important;
+    width: 100vw;
+  }
+  .owl-item {
+    height: 100vh;
+  }
+  .owl-main-slider .item img
+  {
+    min-height: 50vh;
+    @media screen and (min-width: 750px) {
+      min-height: 100vh !important;
+    }
+  }
+  .slide-count {
+    color: white;
+  }
+  .exit-fullscreen {
+    display: block;
+    margin-right: 10px;
+    color: white;
+    text-decoration: underline;
+  }
+  .slide-fullscreen {
+    display: none;
+  }
+  #slide-ad {
+    max-width: 80vw;
+    margin: 0 auto;
+  }
+}
+/* End Main Slider Navigation */
+/* End Fullscreen View */
+
+.exit-fullscreen {
+  display: none;
+}
+
+/* Main Slider */
+.owl-main-slider {
+  font-family: Roboto;
+  //max-width: 634px;
+}
+
+.owl-main-slider .item {
+  height: auto;
+  //max-width: 634px;
+}
+
+.owl-main-slider .item img{
+  width: 100%;
+  max-height: 422.66px;
+}
+
+/* Main Slider Navigation */
+.owl-main-slider .owl-prev:hover,
+.owl-main-slider .owl-next:hover {
+  opacity: 0.8;
+}
+/* End Main Slider Navigation */
+
+.field-name-field-google-ad-code {
+  display: none !important;
+}
+
+.slide-caption p {
+  color: #888!important;
+}
+
+/* Slideshow Thumbnails */
+.owl-thumbnails owl-item {
+  width: 66px;
+
+}
+
+.owl-carousel {
+  .owl-item {
+    &.synced {
+       img {
+         border: 2px solid red;
+       }
+    }
+  }
+}
+
+.owl-thumbnails .owl-nav [class*=owl-] {
+  top: -30px;
+  width: 40px;
+  border: none;
+  height: 37px;
+  color: white;
+  font-size: 20px;
+  margin: 30px;
+  padding-bottom: 30px;
+  z-index: 10000;
+}
+
+.owl-thumbnails .owl-carousel .owl-stage-outer {
+  max-width: 500px !important;
+}
+
+.owl-thumbails owl-nav {
+  margin-top: -300px;
+}
+
+.owl-thumbnails owl-item active {
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: red !important;
+}
+
+button:focus {outline:0;}
+
+.owl-thumbails .owl-prev i, .owl-next i {transform : scale(1,6); color: #ccc;}
+
+
+/* Main Slider Navigation */
+@media only screen and (min-width: 800px) {
+  .owl-prev {
+    width: 15px;
+    height: 100px;
+    position: absolute;
+    top: -40%;
+    right: -125px;
+    margin-left: -500px;
+    display: block !important;
+    border: 0px solid black;
+
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .owl-thumbnails .owl-next {
+    width: 15px;
+    height: 100px;
+    position: absolute;
+    top: -40%;
+    right: -185px;
+    display: block !important;
+    border:0px solid black;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .owl-thumbnails .owl-stage-outer {
+   width: 100%
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .owl-thumbnails .owl-stage-outer {
+    //margin-right: px;
+  }
+}
+
+.owl-item {
+  width: -1px !important;
+}
+
+.slide-fullscreen {
+  float: right;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.slide-count {
+  float: right;
+  color: black;
+
+  &:hover {
+    text-decoration: none;
+    color: black;
+  }
+}
+
+.slide-title {
+  max-width: 20%;
+  padding-bottom: 50px;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.slide-title a {
+  color: red !important;
+
+}
+
+.owl-thumbnails {
+  width: 75%;
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }
+
+}
+
+.owl-nav disabled {
+  display: block !important;
+}
+
+.slide-info-container {
+  margin-bottom: 15px;
+  max-width: 634px;
+}
+.slide-info {
+  margin-bottom: 15px;
+}
+
+#slide-ad {
+  max-width: 100vw;
+}
+
+.exit-fullscreen {
+  display: none;
+}
+
+.inactive-item{
+  opacity: 0.5;
+}
+
+.active-item {
+  opacity: 1;
+}
+
+.item iframe {
+  min-width: 100%;
+  max-height: 100%;
+}
+
+.owl-nav {
+  margin-left: 20%;
+}

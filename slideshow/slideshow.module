@@ -1,0 +1,181 @@
+<?php
+/**
+ *  File: slideshow.module
+ *  Purpose: Custom slideshow module for Drupal 7
+ *  Version: 1.0.0
+ */
+
+/**
+ * @function slideshow_error_message
+ * @purpose Output an error message to the PHP Error log, Drupal Watchdog and Drupal Error messaging function
+ * @param string $status
+ * @param string $code
+ * @param string $message
+ */
+function slideshow_error_message( $status = 'status', $code = '', $message = '' )
+{
+    // 1. Initialize variables
+    $status = strtolower( $status ); // Set the status to be lowercase
+
+    // 2. Validate that the status is one of the desired options, if not set it to the default 'status'
+    switch ($status) {
+        case 'status':
+        case 'warning':
+        case 'error':
+            break;
+        default:
+            $status = 'status';
+    }
+
+    // 3. Construct the message string
+    $type = '';
+    $errormsg = 'MQ Slideshow | ' . $status . ' - ' . $code . ' | ' . $message;
+
+    // 4. Output the message
+    error_log($errormsg); // PHP Error Log
+    watchdog( $type,$errormsg ); // Drupal Logger
+    drupal_set_message( $errormsg, $status );
+}
+// End slideshow_error_message()
+
+
+/**
+ * @function slideshow_error_message
+ * @purpose Call hook_node_info() - Creates new content type
+ * @return array
+ */
+function slideshow_node_info()
+{
+    // Create New "Slideshow" Content Type
+    return array(
+        'slideshow' => array(
+            'name' => t('Slideshow'),
+            'base' => 'slideshow',
+            'description' => t('You can add new slideshows here.'),
+            'has_title' => TRUE,
+            'title_label' => t('Slideshow Name')
+        ),
+        //Create New "Listicle" Content Type
+        'listicle' => array(
+            'name' => t('Listicle'),
+            'base' => 'lsiticle',
+            'description' => t('You can add new listicles here.'),
+            'has_title' => TRUE,
+            'title_label' => t('Listicle Name Name')
+        )
+    );
+}
+// End slideshow_node_info()
+
+/**
+ * @function slideshow_form()
+ * @purpose Implements hook_form()
+ * @param $node
+ * @param $form_state
+ * @return array
+ */
+function slideshow_form($node, $form_state)
+{
+    return node_content_form($node, $form_state);
+}
+//End slideshow_node_info()
+
+/**
+ * @function hook_uninstall()
+ * @purpose Implements hook_uninstall() When the module is uninstalled. Check for errors, then log and display message
+ */
+function slideshow_uninstall()
+{
+    slideshow_error_message('status', 'MQSlide003', "MQ Slideshow has successfully uninstalled");
+}
+// End slideshow_uninstall()
+
+/**
+ * @function slideshow_enable
+ * @purpose * Implement hook_enable() - When the module is enabled. Check for errors, then log and display message
+ */
+function slideshow_enable()
+{
+    slideshow_error_message('status', 'MQSlide003', "MQ Slideshow has successfully been enabled.");
+}
+// End slideshow_enable()
+
+/**
+ * @function slideshow_disable()
+ * @purpose Implement hook_disable() - When the module is disabled. Check for errors, then log and display message
+ */
+function slideshow_disable()
+{
+    slideshow_error_message('status', 'MQSlide004', "MQ Slideshow has successfully been disabled.");
+}
+// End slideshow_disable()
+
+/**
+ * @function slideshow_theme
+ * @purpose Implements hook_theme(). - Use custom theme to override slideshow_collection field for custom content type "slideshow"
+ * @return array
+ */
+function slideshow_theme()
+{
+    // 1. Initialize Variables
+    $theme = array();
+    $theme['field__field_images'] = array(
+        'render element' => 'content',
+        'base hook' => 'field',
+        'template' => 'field--field-images--slideshow',
+        'path' => drupal_get_path('module', 'slideshow') . '/templates',
+    );
+    return $theme;
+}
+// End of slideshow_theme()
+
+/**
+ * @function slideshow_preprocess_field
+ * @purpose  Implements hook_preprocess()
+ * @param $variables
+ * @NTD:
+ * - Cache clear is not necessary for changes in this function.
+ * - Variables output defined here should align with references in the .tpl file
+ *
+ */
+function slideshow_preprocess_field(&$variables)
+{
+    // 1. Initialize Variables
+    $result = array();
+    $adIndex = 3;
+    $slides = $variables['element']['#object']->field_images['und']; // Retrieve the slides from the field
+    $adCode = $variables['element']['#object']->field_ad_code['und'][0]['value']; // Retrieve the Google Ad code from field
+
+    // Check if an ad code has been supplied -- If it has, inject the ad into the carousel
+    if (isset($adCode)) {
+        // Create the Ad object to inject
+        $ad = array(
+            'title' => $adCode,
+            'status' => 0
+        );
+
+        // Populate the result array with the slides and inject an ad every $adIndex apart
+        foreach($slides as $key=>$slide) {
+            $count = $key + 2 ; // Index for array is 0 based and we need ads to be $adIndex apart
+            if ( $count % $adIndex == 0 ){ // Modulus division operator to inject every $adIndex apart
+                $result[] = $ad;
+                $result[] = $slide;
+            }
+            else {
+                $result[] = $slide;
+            }
+        }
+      // If no ad is supplied, only render the images
+    } else {
+        $result = $slides;
+    }
+
+    // 4. Populate the template variables
+    $variables['retrievedData'] = $variables['element'];
+    $variables['slides'] = $result;
+    $variables['slidecount'] = $variables['element']['#object']->field_images['und']; // Gets the number of images
+    $variables['currentslide'] = 0;
+
+}
+// End of slideshow_preprocess_field()
+// End of file

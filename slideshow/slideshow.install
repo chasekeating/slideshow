@@ -1,0 +1,171 @@
+<?php
+/**
+ *  File: slideshow.install
+ *  Purpose: Installation file for the slideshow module
+ *  Version: 1.0.0
+ */
+
+/**
+ * @function slideshow_install()
+ * @purpose Calls hook_install(); and begins the installation of the module
+ * @throws FieldException
+ */
+function slideshow_install()
+{
+    node_types_rebuild(); // Updates database cache of node types
+    error_log( 'Slideshow Successfully Installed');
+
+    // Loop through fields array and create field and instance
+    $fields_array = _get_field_definition();
+    foreach ($fields_array as $field)
+    {
+        // Check if field already exists
+        if (!field_info_field($field['field']['field_name'])) {
+            field_create_field($field['field']);
+        }
+
+        // Check if instance exists
+        if (!field_info_instance($field['instance']['entity_type'], $field['instance']['field_name'], $field['instance']['bundle'])) {
+            field_create_instance($field['instance']);
+        }
+    }
+    error_log( 'Slideshow Install Complete');
+}
+// End of slideshow_install()
+
+/**
+ * @function _get_field_definition()
+ * @purpose Create the fields to be used in the creation of the content type
+ * @return array
+ */
+function _get_field_definition()
+{
+    $t = get_t();
+    $fields_array = array(
+
+        // Content Type: Slideshow
+        // Add Image Field
+        array(
+            'field' => array(
+                'field_name' => 'field_images', // This is our machine readable name
+                'label' => $t('Slideshow Images'), // Field Label
+                'cardinality' => -1, // Sets maximum amount of image uploads to x. -1 is unlimited
+                'type' => 'image' // Field type
+            ),
+            'instance' => array(
+                'field_name' => 'field_images',
+                'entity_type' => 'node',
+                'bundle' => 'slideshow', // Content type to add field to
+                'type' => 'image',
+                'label' => $t('Slideshow Images'),
+                'widget' => array(
+                    'type' => 'image_image'
+                ),
+                'settings' => array(
+                    'alt_field' => 1,
+                    'default_image' => 0, // No default image
+                    'file_directory' => '', // Override default file directory (/sites/default/files/)
+                    'file_extensions' => 'png gif jpg jpeg',
+                    'image_field_caption' => array( // This utilizes the image field caption module
+                        'enabled' => 1,
+                        'required' => 1,
+                    ),
+                    'image_field_caption_wrapper' => array(
+                        'image_field_caption_default' => array(
+                            'format' => 'filtered_html',
+                            'value' => '',
+                        ),
+                    ),
+                    'max_filesize' => '', // Max Upload File Size
+                    'max_resolution' => '',
+                    'min_resolution' => '',
+                    'title_field' => 1,
+                    'user_register_form' => FALSE,
+                ),
+            ),
+        ),
+
+        // Add Text Field For Ad Code
+        array(
+            'field' => array(
+                'field_name' => 'field_ad_code', // This is our machine readable name
+                'label' => $t('Advertisement Code'), // Field Label
+                'type' => 'text' // Field type
+            ),
+            'instance' => array(
+                'field_name' => 'field_ad_code',
+                'entity_type' => 'node',
+                'bundle' => 'slideshow', // Content type to add field to
+                'type' => 'text',
+                'label' => $t('Advertisement Code'),
+                'widget' => array(
+                    'type' => 'default_text'
+                ),
+            ),
+        ),
+
+        // Content Type: Listicle
+        // Image Field
+        array(
+            'field' => array(
+                'field_name' => 'field_images', // This is our machine readable name
+                'label' => $t('Listicle Images'), // Field Label
+                'cardinality' => -1, // Sets maximum amount of image uploads to x. -1 is unlimited
+                'type' => 'image' // Field type
+            ),
+            'instance' => array(
+                'field_name' => 'field_images',
+                'entity_type' => 'node',
+                'bundle' => 'listicle', // Content type to add field to
+                'type' => 'image',
+                'label' => $t('Listicle Images'),
+                'widget' => array(
+                    'type' => 'image_image'
+                ),
+                'settings' => array(
+                    'alt_field' => 1,
+                    'default_image' => 0, // No default image
+                    'file_directory' => '', // Override default file directory (/sites/default/files/)
+                    'file_extensions' => 'png gif jpg jpeg',
+                    'image_field_caption' => array( // This utilizes the image field caption module
+                        'enabled' => 1,
+                    ),
+                    'image_field_caption_wrapper' => array(
+                        'image_field_caption_default' => array(
+                            'format' => 'filtered_html',
+                            'value' => '',
+                        ),
+                    ),
+                    'max_filesize' => '', // Max Upload File Size
+                    'max_resolution' => '',
+                    'min_resolution' => '',
+                    'title_field' => 1,
+                    'user_register_form' => FALSE,
+                ),
+            ),
+        ),
+
+        // Add text field for advertisement code
+        array(
+            'field' => array(
+                'field_name' => 'field_ad_code', // This is our machine readable name
+                'label' => $t('Advertisement Code'), // Field Label
+                'type' => 'text' // Field type
+            ),
+            'instance' => array(
+                'field_name' => 'field_ad_code',
+                'entity_type' => 'node',
+                'bundle' => 'listicle', // Content type to add field to
+                'type' => 'text',
+                'label' => $t('Advertisement Code'),
+                'widget' => array(
+                    'type' => 'default_text'
+                ),
+            ),
+        ),
+
+    );
+    return $fields_array;
+}
+// End of _get_field_definition()
+// End of file
